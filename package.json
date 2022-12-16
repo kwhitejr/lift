@@ -18,12 +18,15 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "d3": "^7.7.0",
     "gatsby": "^5.2.0",
     "gatsby-plugin-emotion": "^8.2.0",
+    "google-spreadsheet": "^3.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@types/google-spreadsheet": "^3.3.0",
     "@types/node": "^18.11.10",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
