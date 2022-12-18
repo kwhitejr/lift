@@ -1,6 +1,13 @@
-import * as React from "react"
+import React, { useState, useEffect } from "react"
 import type { HeadFC, PageProps } from "gatsby"
-import HeatMap from "./HeatMap"
+
+import Calendar from "../components/Calendar";
+// import data from "../assets/calendar-demo-data.json";
+import creds from "../assets/kwhitejr-com-2cfda5fed901.json";
+
+import { GoogleSpreadsheet } from "google-spreadsheet";
+// const { GoogleSpreadsheet } = require('google-spreadsheet');
+const DOC_ID = "1_nlDf0QP9izwRCQDMMB8ut6cLsnPNzPf96ayGwgohYc"
 
 const pageStyles = {
   color: "#232129",
@@ -138,14 +145,35 @@ const links = [
 ]
 
 const IndexPage: React.FC<PageProps> = () => {
+  const [data, setData] = useState<any>()
+
+  useEffect(() => {
+    const getGoogleSheet = async () => {
+      const doc = new GoogleSpreadsheet(DOC_ID);
+      // await doc.useServiceAccountAuth(creds);
+      await doc.loadInfo();
+      const sheet = doc.sheetsByIndex[0];
+      console.log(sheet);
+      setData(sheet);
+    };
+
+    getGoogleSheet();
+  }, [])
+
   return (
     <main style={pageStyles}>
       <h1 style={headingStyles}>
         Congratulations
         <br />
-        <span style={headingAccentStyles}>— you just made a Gatsby site! 🎉🎉🎉</span>
+        <span style={headingAccentStyles}>— I just made D3 heatmap! 🎉🎉🎉</span>
       </h1>
-      <HeatMap data={null} />
+      <Calendar
+        data={data}
+        config={{
+          x: d => d.Date,
+          y: d => d.Volume,
+        }}
+      />
       <p style={paragraphStyles}>
         Edit <code style={codeStyles}>src/pages/index.tsx</code> to see this page
         update in real-time. 😎
