@@ -65,6 +65,10 @@ function Calendar(data, svgRef, {
     .attr("font-family", "sans-serif")
     .attr("font-size", 10);
 
+  // clear all previous content on refresh
+  const everything = svg.selectAll("*");
+  everything.remove();
+
   const year = svg.selectAll("g")
     .data(years)
     .join("g")
