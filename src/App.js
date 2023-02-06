@@ -1,27 +1,29 @@
 import React, {useState, useEffect} from "react";
-// import { GoogleSpreadsheet } from "google-spreadsheet";
+import Papa from "papaparse";
 import Calendar from "./Calendar";
 import data from "./calendar-demo-data.json";
 import './App.css';
 
-// const DOC_ID = "1_nlDf0QP9izwRCQDMMB8ut6cLsnPNzPf96ayGwgohYc"
+const publishedCsv = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRx0VGPZXXdeQCHi865kjqvK76ZEucHt786cAt4M0Z2LRKxM2vnhiUM1VL9YtLMbyEYualICQWbA4ak/pub?output=csv";
 
 function App() {
 
-  // const [data, setData] = useState(data);
+  const [liftData, setLiftData] = useState();
 
-  // useEffect(() => {
-  //   const getGoogleSheet = async () => {
-  //     const doc = new GoogleSpreadsheet(DOC_ID);
-  //     // await doc.useServiceAccountAuth(creds);
-  //     await doc.loadInfo();
-  //     const sheet = doc.sheetsByIndex[0];
-  //     console.log(sheet);
-  //     setData(sheet);
-  //   };
+  useEffect(() => {
+    const fetchData = async () => Papa.parse(publishedCsv, {
+      download: true,
+      header: true,
+      complete: (results) => {
+        setLiftData(results.data);
+      },
+    });
 
-  //   getGoogleSheet();
-  // }, [])
+    fetchData();
+  }, [])
+  // const lifts = Array.from(liftData);
+
+  console.log(liftData);
 
   return (
     <div className="App">
